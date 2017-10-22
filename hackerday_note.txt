@@ -1,0 +1,33 @@
+select year, month, dayofmonth,dayofweek, flightnum, origin, dest, distance, arrdelay, depdelay from pq_flight_part limit 100;
+
+select year, month, dayofmonth,dayofweek, flightnum, origin, dest, distance, arrdelay, depdelay from pq_flight_part where year = 2007 limit 100;
+
+
+
+select count(1) from airports;
+
+select state, count(1) num from airports group by state;
+
+show create table airports;
+
+analyze table airports compute statistics;
+
+
+analyze table airports compute statistics for columns;
+
+
+show create table pq_flight_part;
+select year, count(1) from pq_flight_part group by year;
+analyze table pq_flight_part partition(year=2006) compute statistics;
+analyze table pq_flight_part partition(year=2007) compute statistics;
+analyze table pq_flight_part partition(year=2008) compute statistics;
+
+
+
+
+Index
+===============
+show indexes on pq_flight;
+
+create index pq_flight_origin_idx on table pq_flight(origin) as 'COMPACT' WITH DEFERRED REBUILD;
+alter index pq_flight_origin_idx on pq_flight rebuild;

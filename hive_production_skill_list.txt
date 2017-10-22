@@ -1,0 +1,20 @@
+Production Hive Use
+==============================
+-		Partitioning
+-		Clustering
+		Joins 
+		Sampling
+-		Ordering - ORDER BY/DISTRIBUTE BY/SORT BY/CLUSTER BY
+-		Indexes
+-		Statistics
+-		Explain
+-		File Formats
+		Text, Json, CSV, Sequence, Avro, ORC, Parquet
+-		Compression and compression codec
+-		Transaction
+-		Integration with Spark
+-		Integration with Impala
+-		Execution engines (MR, Spark and Tez)
+-		Archiving
+-		Analytic/Windows Functions
+-		HPLSQL

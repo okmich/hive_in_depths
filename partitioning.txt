@@ -1,0 +1,9 @@
+
+
+-- Partitioning improves the time taken to access data by restricting query to only a certain portion of the dataset.
+-- Care has to be taken as to work will make the partition column.
+-- Once partition has been created, you can alter some definitions of the partition different from other partitions.
+-- There is no hard limit on the number of partitions that a hive table can contain.
+-- Querying without the partition column with increase the amount of time the query will complete compared to a non-partitioned table.
+-- Prefare static partitioning to dynamic for day-to-day data ingestion
+-- Pre-empt small file scenarios

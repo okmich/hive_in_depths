@@ -1,0 +1,17 @@
+EXPLAIN
+
+	- Explain returns the execution plan for a query without running it.
+	- Very useful utility for comparing two queries that will yield the same result in a bid to find out which implementation is optimal.
+
+	Stages
+
+
+	Dependencies
+
+
+	Authourization
+
+
+
+ANALYZE
+	- compute statistics that would enable more optimization from the CBO during query

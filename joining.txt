@@ -1,0 +1,35 @@
+
+
+
+MapJoin
+	-	Data is read from the small table and broadcasted to the nodes for the bigger table
+	-	MapJoins can use unequal operation
+	-	MJ can be invoked through hint 
+
+			select /*+ MAPJOIN(carrier) */ from flights f join carrier c on 
+					c.carriercode = f.carrier
+	-	MJ can also be invoked by using configuration in the script of using the hive-site.xml file
+			set hive.auto.convert.join=true;
+
+	Not supported
+		-	The use of MAPJOIN after UNION ALL, LATERAL VIEW, GROUP BY/JOIN/SORT BY/CLUSTER BY/DISTRIBUTE BY
+		-	The use of MAPJOIN before UNION, JOIN, and another MAPJOIN
+
+Bucket Map Join
+	-	See clustering.txt
+	-	In
+
+
+Left Semi Join
+	-	But IN/NOT IN/EXISTS/NOT EXIST now exists in Hive	
+
+Sort merge bucket (SMB) join
+
+
+Sort merge bucket map (SMBM) join
+
+
+Skew Join
+	
+
+

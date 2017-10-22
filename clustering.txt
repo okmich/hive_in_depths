@@ -1,0 +1,20 @@
+CLUSTERING
+=======================
+
+
+- Improve time of queries that include sampling and mapside joins
+- Bucketing column should be one that has a high degree of unique values. A knowledge of your dataset would help.
+- Bucketing is useful for fact tables
+- The number of bucket should be carefully chosen. It cannot be changed once the table has been created.
+- Enforce bucketing by setting hive.enforce.bucketing=true. Not necesary for hive 2.x onward.
+
+
+create external table rating_pq(
+	userId bigint,
+	movieId bigint,
+	rate float,
+	ts bigint
+)
+clustered by (movieId) sorted by (ts) desc into 10 buckets;
+stored as parquet;
+
