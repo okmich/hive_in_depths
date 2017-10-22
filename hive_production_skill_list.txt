@@ -17,4 +17,5 @@ Production Hive Use
 -		Execution engines (MR, Spark and Tez)
 -		Archiving
 -		Analytic/Windows Functions
+-		Slow Changing Dimensions (Type 1,2,3)
 -		HPLSQL

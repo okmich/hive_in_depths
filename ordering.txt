@@ -1,0 +1,31 @@
+Sort/Distribute/Cluster/Order By
+=======================================
+
+Nothing fancy except the old and well known order by clause that returns your query result in a particular order based on the ordering column.
+
+However the ordering behaviour changes with each variant.
+
+
+ORDER BY
+	Moves everything into a single reduce and applies the sorting there.
+	Could be quite slow for a large dataset.
+	Guarantees total ordering
+
+	Not that hive is now lenient on using LIMIT with ORDER BY
+
+
+SORTED BY 
+	Sorts data per reducer.
+	Guarantees per-reducer ordering
+
+	Change number of reducer and try sorting 
+	SET mapred.reduce.tasks = 2;
+
+
+DISTRIBUTE BY
+	The key or column that will be used to send each records to a reducer.
+
+
+CLUSTER BY
+	is the same as 
+		DISTRIBYTE BY col_name SORT BY col_name
