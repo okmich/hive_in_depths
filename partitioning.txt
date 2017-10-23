@@ -1,9 +1,61 @@
 
 
 -- Partitioning improves the time taken to access data by restricting query to only a certain portion of the dataset.
--- Care has to be taken as to work will make the partition column.
+-- Care has to be taken as to what will make the partition column.
 -- Once partition has been created, you can alter some definitions of the partition different from other partitions.
 -- There is no hard limit on the number of partitions that a hive table can contain.
 -- Querying without the partition column with increase the amount of time the query will complete compared to a non-partitioned table.
--- Prefare static partitioning to dynamic for day-to-day data ingestion
+-- prefer static partitioning to dynamic for day-to-day data ingestion
 -- Pre-empt small file scenarios
+
+--creating a partitioned version of the flight_raw table
+create external table flight_ptd_raw 
+	(month tinyint,dayofmonth tinyint,dayofweek tinyint,
+	deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
+	uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint,
+	crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint, 
+	origin string, dest string, distance smallint, taxiin string, taxiout string,
+	cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
+	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
+	partitioned by (year smallint)
+row format delimited
+fields terminated by ',';
+
+-- create partition for 2004
+alter table flight_ptd_raw add partition(year=2004) location '/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2004';
+alter table flight_ptd_raw add partition(year=2005) location '/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2005';
+alter table flight_ptd_raw add partition(year=2006) location '/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2006';
+alter table flight_ptd_raw add partition(year=2007) location '/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2007';
+--alter table flight_ptd_raw add partition(year=2008) location '/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2008';
+
+--insert into partition
+insert into flight_ptd_raw partition (year=2004)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay 
+from flight_raw where year = 2004;
+
+insert into flight_ptd_raw partition (year=2005)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay 
+from flight_raw where year = 2005;
+
+insert into flight_ptd_raw partition (year=2006)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay 
+from flight_raw where year = 2006;
+
+insert into flight_ptd_raw partition (year=2007)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay 
+from flight_raw where year = 2007;
+
+-- inserting data the dynamic partition
+insert into flight_ptd_raw partition (year)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay, year 
+from flight_raw where year = 2008;
+
+
+
+	- when you read a partition datasets from other hadoop tools, you must recognize that the partition information is lost reading the data from files. To solve, you should always use the hive integration for that tool to read the data.
+
+	- alter individual table partitions by altering the physical folder on hdfs then execution alter table partition command in hive
+
+hdfs dfs -mv /user/okmich20/hive/warehouse/airline.db/flight_ptd_raw/year=2008 /user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2008
+
+alter table flight_ptd_raw partition(year=2008) set location  'hdfs://iop-bi-master.imdemocloud.com:8020/user/okmich20/rawdata/handson_train/airline_performance/flights_ptd/2008';

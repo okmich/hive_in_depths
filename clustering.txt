@@ -1,20 +1,27 @@
 CLUSTERING
 =======================
 
-
 - Improve time of queries that include sampling and mapside joins
 - Bucketing column should be one that has a high degree of unique values. A knowledge of your dataset would help.
 - Bucketing is useful for fact tables
 - The number of bucket should be carefully chosen. It cannot be changed once the table has been created.
 - Enforce bucketing by setting hive.enforce.bucketing=true. Not necesary for hive 2.x onward.
 
+create external table flight_ptd_clustd_raw 
+	(month tinyint,dayofmonth tinyint,dayofweek tinyint,
+	deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
+	uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint,
+	crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint, 
+	origin string, dest string, distance smallint, taxiin string, taxiout string,
+	cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
+	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
+partitioned by (year smallint)
+clustered by (month) sorted by (month, dayofmonth) into 12 buckets
+row format delimited
+fields terminated by ',';
 
-create external table rating_pq(
-	userId bigint,
-	movieId bigint,
-	rate float,
-	ts bigint
-)
-clustered by (movieId) sorted by (ts) desc into 10 buckets;
-stored as parquet;
+
+-- use dynamic partitioning to load the data
+insert overwrite table flight_ptd_clustd_raw partition(year)
+select month,dayofmonth,dayofweek,deptime,crsdeptime , arrtime,crsarrtime ,uniquecarrier  , flightnum ,tailnum , actualelapsedtime  ,crselapsedtime  ,airtime  ,arrdelay , depdelay ,origin  , dest ,distance, taxiin , taxiout   ,cancelled , cancellationcode  , diverted   ,carrierdelay   ,weatherdelay  ,nasdelay ,securitydelay,lateaircraftdelay, year from flight_raw;
 

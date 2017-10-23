@@ -1,13 +1,13 @@
 Production Hive Use
 ==============================
 -		Partitioning
+-		Explain
+-		Statistics
+-		Ordering - ORDER BY/DISTRIBUTE BY/SORT BY/CLUSTER BY
 -		Clustering
 		Joins 
 		Sampling
--		Ordering - ORDER BY/DISTRIBUTE BY/SORT BY/CLUSTER BY
 -		Indexes
--		Statistics
--		Explain
 -		File Formats
 		Text, Json, CSV, Sequence, Avro, ORC, Parquet
 -		Compression and compression codec

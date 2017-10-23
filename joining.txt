@@ -1,6 +1,5 @@
-
-
-
+JOINS
+=======================
 MapJoin
 	-	Data is read from the small table and broadcasted to the nodes for the bigger table
 	-	MapJoins can use unequal operation

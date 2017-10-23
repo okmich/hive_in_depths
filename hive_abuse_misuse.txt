@@ -1,0 +1,14 @@
+Abuse
+=================
+-	Using Hive as a transformation engine/platform  (Pig, Spark, MapReduce)
+-	Using Hive as a RDBMS
+-	Not for low latency response/application
+
+
+Use
+================
+1.	Transformation (Simple transformation)
+2. 	Mapping for quering nosql databases.
+3. 	Data warehousing      (Spark, Pig)
+4.	Metastore for other sql-to-hadoop tools (Impala, Hawq, Tajo, Drill, Presto)
+5.	Backend for Reporting and visualization (Excel, applications, notebooks, qlikview, tableau)
