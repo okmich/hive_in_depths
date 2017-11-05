@@ -7,9 +7,15 @@ MapJoin
 
 			select /*+ MAPJOIN(carrier) */ from flights f join carrier c on 
 					c.carriercode = f.carrier
+
 	-	MJ can also be invoked by using configuration in the script of using the hive-site.xml file
 			set hive.auto.convert.join=true;
 
+	- Once the above property is set, any table with size less than that specified in the configuration property will be joined in the map state or broadcast.
+
+			set hive.mapjoin.smalltable.filesize;
+			set hive.smalltable.filesize;
+			
 	Not supported
 		-	The use of MAPJOIN after UNION ALL, LATERAL VIEW, GROUP BY/JOIN/SORT BY/CLUSTER BY/DISTRIBUTE BY
 		-	The use of MAPJOIN before UNION, JOIN, and another MAPJOIN
@@ -61,4 +67,15 @@ Skew Join
 
 		SET hive.groupby.skewindata=true;
 
+
+
+
+explain select flightnum, year, month, dayofmonth, dayofweek, c.description, f.tailnum, p.aircraft_type,
+CONCAT(a.airport, ' ', a.city, ', ', a.state, ', ', a.country ) origin, 
+CONCAT(b.airport, ' ', b.city, ', ', b.state, ', ', b.country ) dest 
+from flight_raw f 
+left join carrier_raw c on f.uniquecarrier = c.code
+left join airport_raw a on f.origin = a.iata
+left join airport_raw b on f.dest = b.iata
+left join plane_info_raw p on p.tailnum = f.tailnum;
 

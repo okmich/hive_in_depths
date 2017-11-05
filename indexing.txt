@@ -1,5 +1,4 @@
 
-
 Indexes are maintained in a separate table.
 
 
@@ -15,8 +14,6 @@ When you don't need them
 -	using orc file format
 -	when using tez execution engine
 
-
-
 Compact 
 	Compact indexing stores the pair of indexed column’s value and its blockid.
 	
@@ -30,11 +27,19 @@ Bitmap
 	-	Bitmap indexing stores the combination of indexed column value and list of rows as a bitmap.
 	-	Used for columns with distinct values
 
-	Example
+	Example 1
 	select dest, count(1) from flight_raw where year = 2007 and origin='DL' group by dest;
 
 	create index flight_origin_dest_idx on table flight_raw(origin, dest) as 'bitmap' with deferred rebuild;
 	alter index flight_origin_dest_idx on flight_raw rebuild;
+
+	Example 2
+	 select count(1) from flight_raw where year = 2007;
+
+	 create index flight_raw_year on table flight_raw (year) as 'bitmap' with deferred rebuild;
+	 alter index flight_raw_year on flight_raw rebuild;
+
+	 drop index flight_raw_year on flight_raw;
 
 NOTE
 Also note that indexes are not longer recommended or supported for the tez execution engine.

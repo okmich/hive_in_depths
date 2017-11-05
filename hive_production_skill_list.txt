@@ -5,9 +5,9 @@ Production Hive Use
 -		Statistics
 -		Ordering - ORDER BY/DISTRIBUTE BY/SORT BY/CLUSTER BY
 -		Clustering
-			Joins 
+-		Joins 
 		Sampling
--			Indexes
+-		Indexes
 -			File Formats
 			Text, Json, CSV, Sequence, Avro, ORC, Parquet
 -			Compression and compression codec
@@ -15,13 +15,14 @@ Production Hive Use
 -			Integration with Spark
 -			Integration with Impala
 -		Execution engines (MR, Spark and Tez)
--		Archiving
+-			Archiving
 -		Analytic/Windows Functions
 
 
-Slow changing Dimension hackerday
+Slow changing Dimension hackerday  (Data warehousing)
 ==========================================
--		Transaction
+-		Fact table and Dimension
+-		Transaction (ACID)
 -		Slow Changing Dimensions (Type 2,3)
 			In Spark
 

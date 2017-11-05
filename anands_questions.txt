@@ -52,10 +52,10 @@ Which Plan used by a member in most of the time?
 with t as (select cellno, plan_type, count(1) sub_count from plans group by cellno, plan_type)
 select * from t join (select cellno, max(sub_count) max from t group by cellno) v on v.cellno = t.cellno and t.sub_count = v.max;
 
-2)
+2) //performs 7 to 8 times better than query 1
 with v as (select cellno, count(plan_type) over (partition by cellno, plan_type order by cellno) plan_count from plans)
-select cellno, max(plan_count) from v group by cellno
-
+select cellno, max(plan_count) from v group by cellno;
+ 
 Which of the plan is favorite among all plans/which is used by most of the members?
 ====================================================================================
 

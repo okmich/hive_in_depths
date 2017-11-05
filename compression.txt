@@ -1,0 +1,12 @@
+COMPRESSION
+=========================
+to enable compression, set true
+
+	SET hive.exec.compress.output=true;
+
+To set the compression codec, use
+	set mapred.output.compression.codec=...
+
+Compressing intermediate output applies to mapreduce execution alone and can be set with
+
+	SET hive.exec.compress.intermediate=true 

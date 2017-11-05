@@ -6,6 +6,7 @@ wget http://stat-computing.org/dataexpo/2009/2006.csv.bz2
 wget http://stat-computing.org/dataexpo/2009/2007.csv.bz2
 wget http://stat-computing.org/dataexpo/2009/2008.csv.bz2
 
+
 hdfs dfs -mkdir -p /user/okmich20/rawdata/handson_train/airline_performance/flights
 
 bzip2 -d 2004.csv.bz2

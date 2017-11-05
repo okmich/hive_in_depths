@@ -34,7 +34,7 @@ create external table flight_orc
 	origin string, dest string, distance smallint, taxiin string, taxiout string,
 	cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
 	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
-	stored as avro
+	stored as orc
 location '/user/raj_ops/rawdata/handson_train/airline_performance/flights_orc';
 
 parquet
@@ -49,3 +49,29 @@ create external table flight_pq
 	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
 	stored as parquet
 location '/user/raj_ops/rawdata/handson_train/airline_performance/flights_pq';
+
+
+//writing
+insert overwrite table flight_seq select * from flight_raw; --426.69 s
+insert overwrite table flight_avro select * from flight_raw; --437.58 s
+insert overwrite table flight_orc select * from flight_raw;
+insert overwrite table flights_pq select * from flight_raw;
+
+
+//reading
+select year, count(1) from flight_raw group by year;
+select year, count(1) from flight_seq group by year;
+select year, count(1) from flight_avro group by year;
+set mapred.reduce.tasks=6;
+select year, count(1) from flight_orc group by year;
+set mapred.reduce.tasks=10;
+select year, count(1) from flights_pq group by year;
+set mapred.reduce.tasks=-;1
+
+
+//reading with predicate
+select count(1) from flight_raw where year = 2007;
+select count(1) from flight_seq where year = 2007;
+select count(1) from flight_avro where year = 2007;
+select count(1) from flight_orc where year = 2007;
+select count(1) from flights_pq where year = 2007;
