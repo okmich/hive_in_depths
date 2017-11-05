@@ -1,4 +1,4 @@
-# Airline on-time performance dataset from 2006 to 2008 (6 zipped files)
+# Airline on-time performance dataset from 2004 to 2008 (6 zipped files)
 # ======================================================================
 wget http://stat-computing.org/dataexpo/2009/2004.csv.bz2
 wget http://stat-computing.org/dataexpo/2009/2005.csv.bz2

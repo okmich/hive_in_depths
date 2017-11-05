@@ -1,0 +1,19 @@
+HIVE EXECUTION ENGINE
+==============================
+3 options
+	mr
+	spark
+	tez
+
+how to know your execution engine
+	set hive.execution.engine;
+
+how to set your execution engine
+	set hive.execution.engine=xxx;
+
+In the order of performance
+	Spark
+	Tez
+	..
+	MR
+

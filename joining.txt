@@ -16,19 +16,49 @@ MapJoin
 
 Bucket Map Join
 	-	See clustering.txt
-	-	In
+	-	smartly join very large tables
+	- 	The number of buckets of the left (bigger) table must be a multiple of the number of buckets on the right (smaller table).
+	-	if there is sorting, use the bucket map sort join.
+
+	SET hive.auto.convert.join=true; --default false
+	SET hive.optimize.bucketmapjoin=true; --default false
 
 
 Left Semi Join
 	-	But IN/NOT IN/EXISTS/NOT EXIST now exists in Hive	
 
 Sort merge bucket (SMB) join
+	- A join performed on a clustered table with the same bucketted, sorted and joined condition column. 
+	- exact bucket in the clustering definition.
+	To enable this
+		SET hive.input.format=
+			org.apache.hadoop.hive.ql.io.BucketizedHiveInputFormat;
+		SET hive.auto.convert.sortmerge.join=true;
+		SET hive.optimize.bucketmapjoin=true;
+		SET hive.optimize.bucketmapjoin.sortedmerge=true;
+		SET hive.auto.convert.sortmerge.join.noconditionaltask=true;
 
 
 Sort merge bucket map (SMBM) join
+	An SMB join that is triggered only in the map side on the clustered column. So the conditions for SMB also hold.
+	To enable,
 
+		SET hive.auto.convert.join=true;
+		SET hive.auto.convert.sortmerge.join=true
+		SET hive.optimize.bucketmapjoin=true;
+		SET hive.optimize.bucketmapjoin.sortedmerge=true;
+		SET hive.auto.convert.sortmerge.join.noconditionaltask=true;
+		SET hive.auto.convert.sortmerge.join.bigtable.selection.policy=
+			org.apache.hadoop.hive.ql.optimizer.TableSizeBasedBigTableSelectorForAutoSMJ;
 
 Skew Join
-	
+	Necessary when walking with unevenly distributed dataset where fewer nodes get to do most of the work.
+
+		SET hive.optimize.skewjoin=true;
+		SET hive.skewjoin.key=100000;
+
+	in the case of skewed keys in group by, optimize it with the following 
+
+		SET hive.groupby.skewindata=true;
 
 

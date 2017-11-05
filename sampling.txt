@@ -11,7 +11,7 @@ There are three ways to get data samples from a hive table
 
 	NOTE: try each to see their performance on different datasets
 
-2) This is a sample done on a bucketed table using the bucket column. See bucketting.txt for notes on clustering.
+2) This is a sample done on a clustered table using the bucket column. See clustering.txt for notes on clustering.
    Note that you will gain efficient sample is the 
 
    select * from rating_pq tablesample (bucket 2 out of 40 on movieId);
@@ -23,3 +23,6 @@ There are three ways to get data samples from a hive table
 	select * from rating tablesample(30 rows);
 	select * from rating tablesample(1 percent);
 	select * from rating tablesample(1M);
+
+
+select * from flight_ptd_clustd_raw tablesample (bucker 2 out of 12 rand()) limit 20;

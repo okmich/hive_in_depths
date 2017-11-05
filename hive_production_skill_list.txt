@@ -5,17 +5,28 @@ Production Hive Use
 -		Statistics
 -		Ordering - ORDER BY/DISTRIBUTE BY/SORT BY/CLUSTER BY
 -		Clustering
-		Joins 
+			Joins 
 		Sampling
--		Indexes
--		File Formats
-		Text, Json, CSV, Sequence, Avro, ORC, Parquet
--		Compression and compression codec
--		Transaction
--		Integration with Spark
--		Integration with Impala
+-			Indexes
+-			File Formats
+			Text, Json, CSV, Sequence, Avro, ORC, Parquet
+-			Compression and compression codec
+
+-			Integration with Spark
+-			Integration with Impala
 -		Execution engines (MR, Spark and Tez)
 -		Archiving
 -		Analytic/Windows Functions
--		Slow Changing Dimensions (Type 1,2,3)
--		HPLSQL
+
+
+Slow changing Dimension hackerday
+==========================================
+-		Transaction
+-		Slow Changing Dimensions (Type 2,3)
+			In Spark
+
+
+Hive 2.0
+==========================================
+-		HPLSQL (2.0 feature)
+-		LLAP

@@ -1,0 +1,63 @@
+Mobile_No	Plan	Month
+2223456	199	January
+2223456	399	February
+2223456	299	March
+2223456	499	April
+2223456	299	May
+2223456	299	June
+2223456	299	July
+2223456	299	August
+2223456	299	September
+2223456	299	October
+2223456	299	November
+2223456	299	December
+2223451	599	January
+2223451	199	February
+2223451	299	March
+2223451	399	April
+2223451	299	May
+2223451	299	June
+2223451	299	July
+2223451	299	August
+2223451	299	September
+2223451	299	October
+2223451	299	November
+2223451	299	December
+2224551	599	January
+2224551	299	February
+2224551	299	March
+2224551	399	April
+2224551	199	May
+2224551	299	June
+2224551	299	July
+2224551	299	August
+2224551	299	September
+2224551	299	October
+2224551	299	November
+2224551	299	December
+
+Ques 2: Which of the plan is favorite among all plans/which is used by most of the members?
+
+
+select cellno, plan_type, count(1) sub_count from plans 
+group by cellno, plan_type with rollup;
+
+select cellno, plan_type, count(1) sub_count from plans 
+group by cellno, plan_type with cube;
+
+
+Which Plan used by a member in most of the time? 
+==========================================================
+1)
+with t as (select cellno, plan_type, count(1) sub_count from plans group by cellno, plan_type)
+select * from t join (select cellno, max(sub_count) max from t group by cellno) v on v.cellno = t.cellno and t.sub_count = v.max;
+
+2)
+with v as (select cellno, count(plan_type) over (partition by cellno, plan_type order by cellno) plan_count from plans)
+select cellno, max(plan_count) from v group by cellno
+
+Which of the plan is favorite among all plans/which is used by most of the members?
+====================================================================================
+
+
+

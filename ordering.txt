@@ -29,3 +29,18 @@ DISTRIBUTE BY
 CLUSTER BY
 	is the same as 
 		DISTRIBYTE BY col_name SORT BY col_name
+
+
+---
+
+explain select year, dest, avg(arrdelay) avg_arr_delay from flight_raw
+where uniquecarrier = 'DL' and origin = 'ATL'
+group by year, dest
+order by year, avg_arr_delay DESC, dest;
+
+
+explain select year, dest, avg(arrdelay) avg_arr_delay from flight_raw
+where uniquecarrier = 'DL' and origin = 'ATL'
+group by year, dest
+distribute by year
+sort by year, avg_arr_delay DESC, dest;

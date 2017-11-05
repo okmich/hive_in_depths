@@ -1,9 +1,44 @@
 
 
+Indexes are maintained in a separate table.
+
+
+When to use an index
+===========================
+-	very large files
+-	require more performance than you are getting
+-	access pattern is predictable
+-	building a data model (making access pattern even more predictable)
+
+When you don't need them
+===========================
+-	using orc file format
+-	when using tez execution engine
+
+
+
 Compact 
-
-
+	Compact indexing stores the pair of indexed column’s value and its blockid.
+	
+	Example
+	create index airport_state_index on table airport_raw(state) as 'compact' with deferred rebuild;
+	alter index airport_state_index on airport_raw rebuild;
+	desc ok_airline__airport_raw_airport_state_index__;
+	drop index airport_state_index ON airport_raw;
 
 Bitmap
+	-	Bitmap indexing stores the combination of indexed column value and list of rows as a bitmap.
+	-	Used for columns with distinct values
 
+	Example
+	select dest, count(1) from flight_raw where year = 2007 and origin='DL' group by dest;
 
+	create index flight_origin_dest_idx on table flight_raw(origin, dest) as 'bitmap' with deferred rebuild;
+	alter index flight_origin_dest_idx on flight_raw rebuild;
+
+NOTE
+Also note that indexes are not longer recommended or supported for the tez execution engine.
+
+MORE
+check the configuration properties for indexing
+https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties#ConfigurationProperties-Indexing
