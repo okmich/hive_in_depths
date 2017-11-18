@@ -1,0 +1,3 @@
+Once the data is available in hadoop, users of all category will need to be able to query the data like they do in the relational database.
+
+To set up hive for this purpose, use the scripts found in https://github.com/okmich/bigdataretail/tree/master/hive

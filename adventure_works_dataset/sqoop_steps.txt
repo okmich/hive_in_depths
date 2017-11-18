@@ -1,0 +1,4 @@
+To get the adventureworks dataset into hadoop, we need to ingest the rdbms dataset into hdfs using sqoop.
+
+The instruction for this process can be found here.
+https://github.com/okmich/bigdataretail/tree/master/sqoop_scripts

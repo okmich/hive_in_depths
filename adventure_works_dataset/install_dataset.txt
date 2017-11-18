@@ -1,0 +1,2 @@
+To install the dataset, download the materials from the link below
+https://github.com/okmich/bigdataretail/tree/master/dataset/databasescript
