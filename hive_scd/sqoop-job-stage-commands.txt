@@ -1,0 +1,41 @@
+# sqoop script to create a new job to load customer data from rdbms to hdfs
+sqoop-job --create loadcustomers -- import  --connect jdbc:mysql://quickstart:3306/adventureworks --username root \
+--table v_customer  --as-parquetfile --target-dir /user/cloudera/bigretail/output/stores/stage/customers  --append \
+--split-by CustomerID --num-mappers 1 --check-column ModifiedDate --incremental lastmodified \
+--password-file /user/cloudera/passwordfile
+
+
+# sqoop script to create a new job to load salesorderheader data from rdbms to hdfs
+sqoop-job --create loadsalesorderheader -- import  --connect jdbc:mysql://quickstart:3306/adventureworks --username root \
+--table v_salesorderheader --as-parquetfile \
+--target-dir /user/cloudera/bigretail/output/stores/stage/salesorderheader  \
+--split-by SalesOrderID --num-mappers 1 --check-column SalesOrderID --incremental append \
+--password-file /user/cloudera/passwordfile
+
+
+# sqoop script to create a new job to load salesorderdetails data from rdbms to hdfs
+sqoop-job --create loadsalesorderdetail -- import  --connect jdbc:mysql://quickstart:3306/adventureworks --username root \
+--table v_salesorderdetails  --as-parquetfile \
+--target-dir /user/cloudera/bigretail/output/stores/stage/salesorderdetails  \
+--split-by SalesOrderDetailID --num-mappers 1 --check-column SalesOrderDetailID --incremental append \
+--password-file /user/cloudera/passwordfile
+
+
+# sqoop script to create a new job to load v_product data from rdbms to hdfs
+sqoop-job --create loadproducts -- import  --connect jdbc:mysql://quickstart:3306/adventureworks --username root \
+--table v_product  --as-parquetfile  --append \
+--target-dir /user/cloudera/bigretail/output/stores/stage/products  \
+--split-by productId --num-mappers 1 --check-column modifieddate --incremental lastmodified \
+--password-file /user/cloudera/passwordfile
+
+# sqoop job to load creditcard table
+sqoop job --create loadcreditcard -- import --connect jdbc:mysql://quickstart:3306/adventureworks --username root \
+--table creditcard --as-parquetfile --target-dir /user/cloudera/bigretail/output/stores/stage/creditcard  --num-mappers 1 --check-column ModifiedDate --append --incremental lastmodified --password-file /user/cloudera/passwordfile 
+
+
+
+
+
+#to execute any of the jobs 
+# sqoop-job --exec loadsalesorderheader
+
